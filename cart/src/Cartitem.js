@@ -4,7 +4,7 @@ class Cartitem extends React.Component{
     
 
     render(){
-        const {title, price, quantity, image , id} = this.props.product;
+        const {title, price, quantity, image,id } = this.props.product;
         return(
             <div className='cart-item'>
             <div className='left-block'>
@@ -33,7 +33,7 @@ class Cartitem extends React.Component{
                     alt='delete' 
                     className='action-icons' 
                     src='https://cdn-icons-png.flaticon.com/512/3096/3096750.png'
-                    onClick={()=> this.props.ondelproduct(this.props.product.id)}
+                    onClick={()=> this.props.ondelproduct(id)}
 
                     />
                 </div>

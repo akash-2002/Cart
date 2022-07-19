@@ -2,12 +2,15 @@ import React from 'react';
 import Cartitem from './Cartitem';
 
 
-const Navbar =()=>{
+const Navbar =(props)=>{
+
     return(
         <div style={styles.nav}>
             <div style={styles.cartIconContainer}>
+            <span style={styles.total}>Total: {props.price}</span>
                 <img src='https://cdn-icons-png.flaticon.com/512/3144/3144456.png' style={styles.cartIcon} alt='cart-icon'/>
-                <span style={styles.cartCount}>3</span>
+
+                <span style={styles.cartCount}>{props.count}</span>
             </div>
         </div>
 
@@ -15,6 +18,10 @@ const Navbar =()=>{
     
 }
 const styles = {
+  total:{
+    fontSize: 35,
+    paddingRight:35,
+  },
     cartIcon: {
       height: 32,
       marginRight: 20
