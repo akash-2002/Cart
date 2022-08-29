@@ -2,47 +2,38 @@ import React from 'react';
 import './App.css';
 import Cart from './cart';
 import Navbar from './navbar.js';
+// import * as firebase from 'firebase';
+import firebase from "firebase/compat/app"
+import "firebase/compat/auth"
+import "firebase/compat/firestore"
+import db from './index.js';
  class App extends React.Component {
   constructor(){
     super();
     this.state={ 
-        products: [{
-            title:'Watch',
-            price:999,
-            quantity:1,
-            image:'',
-            id:1
-
-        },
-        {
-            title:'Phone',
-            price:10999,
-            quantity:1,
-            image:'',
-            id:2
-
-        },
-        {
-            title:'Laptop',
-            price:45900,
-            quantity:1,
-            image:'',
-            id:3
-
-        },
-        {
-            title:'Earbuds',
-            price:1900,
-            quantity:1,
-            image:'',
-            id:4
-
-        },
-        
-        
-    ]
+        products: [],
+        loading:true
     }
+
     
+}
+componentDidMount(){
+  db
+  .collection('products')
+  .get()
+  .then((snapshot)=>{
+    
+    const product = snapshot.docs.map((doc)=>{
+      const data=doc.data();
+      data['id'] = doc.id;
+      return data;
+    })
+    this.setState({
+      products:product,
+      loading:false,
+    })
+  })
+  
 }
 onincreasequantity = (product) => {
     console.log("hey increase quantity of : " , product);
@@ -61,7 +52,8 @@ ondecquantity = (product) => {
  if(products[index].quantity>1){
  products[index].quantity -= 1;
  this.setState({
-    products:products
+    products:products,
+    
  })
 }
 }
@@ -90,7 +82,7 @@ totalprice=()=>{
   return price;
 }
   render(){
-    const {products}=this.state;
+    const {products, loading}=this.state;
     return (
       <div className="App">
         <Navbar count={this.totalcount()} price={this.totalprice()}/>
@@ -100,7 +92,9 @@ totalprice=()=>{
           ondelproduct={this.ondelproduct}
           products = {products}
         />
+        {loading && <h1>loading data.....</h1>}
       </div>
+      
     );
   }
 }

@@ -31,7 +31,7 @@ const styles = {
       background: '#4267b2',
       display: 'flex',
       justifyContent: 'flex-end',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     cartIconContainer: {
       position: 'relative'
