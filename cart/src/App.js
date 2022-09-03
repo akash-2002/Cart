@@ -20,8 +20,7 @@ import db from './index.js';
 componentDidMount(){
   db
   .collection('products')
-  .get()
-  .then((snapshot)=>{
+  .onSnapshot((snapshot)=>{
     
     const product = snapshot.docs.map((doc)=>{
       const data=doc.data();
@@ -35,52 +34,81 @@ componentDidMount(){
   })
   
 }
-addpro(){
-  db.collection('products')
-  .add({
-    quantity:1,
-    image:'',
-    title:'TV',
-    price:19999,
-  })
-  .then((snapshot)=>{
-console.log(snapshot);
-alert('product has been added');
+// addpro(){
+//   db.collection('products')
+//   .add({
+//     quantity:1,
+//     image:'',
+//     title:'TV',
+//     price:19999,
+//   })
+//   .then((snapshot)=>{
+// console.log(snapshot);
+// alert('product has been added');
 
-  }).catch((error)=>
-  {console.log(error)
+//   }).catch((error)=>
+//   {console.log(error)
 
-  })
-}
+//   })
+// }
 onincreasequantity = (product) => {
-    console.log("hey increase quantity of : " , product);
+    //console.log("hey increase quantity of : " , product);
     const{products} = this.state;
     const index = products.indexOf(product);
-    console.log(index);
-    products[index].quantity += 1;
-    this.setState({
-        products : products
+//     console.log(index);
+//     products[index].quantity += 1;
+//     this.setState({
+//         products : products
+// })
+const proref = db.collection('products').doc(products[index].id);
+proref.update({
+  quantity:products[index].quantity+1,
+
+}).then(()=>{
+  console.log(product)
+}).catch((error)=>{
+  console.log(error);
 })
 
 }
 ondecquantity = (product) => {
  const{products}   = this.state;
  const index = products.indexOf(product);
- if(products[index].quantity>1){
- products[index].quantity -= 1;
- this.setState({
-    products:products,
+ 
+//  if(products[index].quantity>1){
+//  products[index].quantity -= 1;
+//  this.setState({
+//     products:products,
     
- })
+//  })
+// }
+if(products[index].quantity>1){
+  const proref = db.collection('products').doc(products[index].id);
+proref.update({
+  quantity: products[index].quantity - 1,
+})
+.then(()=>{
+  console.log(product);
+}).catch((error)=>console.log(error))
 }
+
+
 }
 ondelproduct=(id)=>{
     const {products} = this.state;
-    const items = products.filter((item)=> item.id !== id);
-    this.setState({
-        products : items 
-    })
-}
+    // const items = products.filter((item)=> item.id !== id);
+    // this.setState({
+    //     products : items 
+    // })
+    //const index = products.indexOf(product);
+    const proref = db.collection('products').doc(id);
+    proref
+    .delete()
+    .then(()=>{
+      console.log("dleted succesfully");
+    }).catch((error)=>console.log(error))
+    }
+  
 totalcount=()=>{
   const{products} = this.state;
   let count =0;
@@ -103,7 +131,7 @@ totalprice=()=>{
     return (
       <div className="App">
         <Navbar count={this.totalcount()} price={this.totalprice()}/>
-        <button onClick={this.addpro}>Add a product</button>
+        {/* <button onClick={this.addpro}>Add a product</button> */}
         <Cart
           onincreasequantity={this.onincreasequantity} 
           ondecquantity={this.ondecquantity} 
