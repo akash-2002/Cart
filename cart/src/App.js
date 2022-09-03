@@ -35,6 +35,23 @@ componentDidMount(){
   })
   
 }
+addpro(){
+  db.collection('products')
+  .add({
+    quantity:1,
+    image:'',
+    title:'TV',
+    price:19999,
+  })
+  .then((snapshot)=>{
+console.log(snapshot);
+alert('product has been added');
+
+  }).catch((error)=>
+  {console.log(error)
+
+  })
+}
 onincreasequantity = (product) => {
     console.log("hey increase quantity of : " , product);
     const{products} = this.state;
@@ -86,12 +103,14 @@ totalprice=()=>{
     return (
       <div className="App">
         <Navbar count={this.totalcount()} price={this.totalprice()}/>
+        <button onClick={this.addpro}>Add a product</button>
         <Cart
           onincreasequantity={this.onincreasequantity} 
           ondecquantity={this.ondecquantity} 
           ondelproduct={this.ondelproduct}
           products = {products}
         />
+
         {loading && <h1>loading data.....</h1>}
       </div>
       
