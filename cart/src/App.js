@@ -21,8 +21,10 @@ componentDidMount(){
   db
   .collection('products')
   //we can add queres and write multiple to combine them
-  .where('price','>',10000)
-  .where('quantity','==',1)
+  // .where('price','>',10000)
+  // .where('quantity','==',1)
+  .orderBy('price', 'desc')
+  // used to arrange data in acending or decending
   .onSnapshot((snapshot)=>{
     
     const product = snapshot.docs.map((doc)=>{
