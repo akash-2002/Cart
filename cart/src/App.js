@@ -20,6 +20,9 @@ import db from './index.js';
 componentDidMount(){
   db
   .collection('products')
+  //we can add queres and write multiple to combine them
+  .where('price','>',10000)
+  .where('quantity','==',1)
   .onSnapshot((snapshot)=>{
     
     const product = snapshot.docs.map((doc)=>{
@@ -38,9 +41,9 @@ componentDidMount(){
 //   db.collection('products')
 //   .add({
 //     quantity:1,
-//     image:'',
-//     title:'TV',
-//     price:19999,
+//     image:'https://www.digitaltrends.com/wp-content/uploads/2021/08/dell-xps-15-oled-2021-laptop.jpg?fit=720%2C720&p=1',
+//     title:'Laptop',
+//     price:79999,
 //   })
 //   .then((snapshot)=>{
 // console.log(snapshot);
