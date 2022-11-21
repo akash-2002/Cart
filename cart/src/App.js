@@ -39,23 +39,23 @@ componentDidMount(){
   })
   
 }
-// addpro(){
-//   db.collection('products')
-//   .add({
-//     quantity:1,
-//     image:'https://www.digitaltrends.com/wp-content/uploads/2021/08/dell-xps-15-oled-2021-laptop.jpg?fit=720%2C720&p=1',
-//     title:'Laptop',
-//     price:79999,
-//   })
-//   .then((snapshot)=>{
-// console.log(snapshot);
-// alert('product has been added');
+addpro(){
+  db.collection('products')
+  .add({
+    quantity:2,
+    image:'https://images.acer.com/is/image/acer/Nitro5_AN515-57_Backliton_RGB-Black_01a-1?$Product-Cards-XL$',
+    title:'Laptop',
+    price:99000,
+  })
+  .then((snapshot)=>{
+console.log(snapshot);
+alert('product has been added');
 
-//   }).catch((error)=>
-//   {console.log(error)
+  }).catch((error)=>
+  {console.log(error)
 
-//   })
-// }
+  })
+}
 onincreasequantity = (product) => {
     //console.log("hey increase quantity of : " , product);
     const{products} = this.state;
@@ -101,17 +101,17 @@ proref.update({
 }
 ondelproduct=(id)=>{
     const {products} = this.state;
-    // const items = products.filter((item)=> item.id !== id);
-    // this.setState({
-    //     products : items 
-    // })
-    //const index = products.indexOf(product);
-    const proref = db.collection('products').doc(id);
-    proref
-    .delete()
-    .then(()=>{
-      console.log("dleted succesfully");
-    }).catch((error)=>console.log(error))
+    const items = products.filter((item)=> item.id !== id);
+    this.setState({
+        products : items 
+    })
+    // const index = products.indexOf(product);
+    // const proref = db.collection('products').doc(id);
+    // proref
+    // .delete()
+    // .then(()=>{
+    //   console.log("deleted succesfully");
+    // }).catch((error)=>console.log(error))
     }
   
 totalcount=()=>{
@@ -136,7 +136,7 @@ totalprice=()=>{
     return (
       <div className="App">
         <Navbar count={this.totalcount()} price={this.totalprice()}/>
-        {/* <button onClick={this.addpro}>Add a product</button> */}
+        {/* { <button onClick={this.addpro}>Add a product</button> } */}
         <Cart
           onincreasequantity={this.onincreasequantity} 
           ondecquantity={this.ondecquantity} 
